@@ -11,7 +11,7 @@ useEffect(()=>{if(!supabase)return;supabase.auth.getSession().then(({data})=>set
 async function cloudLogin(email){setCloudBusy(true);try{await signInWithEmail(email);setError('تم إرسال رابط الدخول إلى بريدك الإلكتروني 📩')}catch(e){setError('تعذر تسجيل الدخول: '+(e.message||'حدث خطأ'))}finally{setCloudBusy(false)}}
 async function cloudLogout(){setCloudBusy(true);try{await signOut();setSession(null);setError('تم تسجيل الخروج')}catch(e){setError('تعذر تسجيل الخروج')}finally{setCloudBusy(false)}}
 async function syncCloud(){if(!session?.user?.id)return;setCloudBusy(true);try{const remote=await loadCloudState(session.user.id);if(remote){const n=normalizeState(remote);setS(n);saveState(n)}else await saveCloudState(session.user.id,s);setError('تمت مزامنة بياناتك ☁️')}catch(e){setError('تعذرت المزامنة السحابية: '+(e.message||'حدث خطأ'))}finally{setCloudBusy(false)}}
-function save(x){try{const n=normalizeState(x);setS(n);saveState(n);setError('')}catch{setError('تعذر حفظ البيانات محليًا. صدّر نسخة احتياطية ثم حاول مجددًا.')}}
+function save(x){try{const n=normalizeState(x);setS(n);saveState(n);if(session?.user?.id)saveCloudState(session.user.id,n).catch(()=>setError('تم الحفظ محليًا، وتعذرت المزامنة السحابية.'));setError('')}catch{setError('تعذر حفظ البيانات محليًا. صدّر نسخة احتياطية ثم حاول مجددًا.')}}
 function add(k,title){if(!title?.trim())return;save({...s,[k]:[...(s[k]||[]),{id:uid(),title:title.trim(),done:false,createdAt:new Date().toISOString()}]})}
 function toggle(k,id){save({...s,[k]:(s[k]||[]).map(x=>x.id===id?{...x,done:!x.done}:x)})}
 function remove(k,id){save({...s,[k]:(s[k]||[]).filter(x=>x.id!==id)})}
