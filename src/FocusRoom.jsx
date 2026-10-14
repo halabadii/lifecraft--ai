@@ -1,10 +1,5 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-
-const dateKey = (date = new Date()) => {
-  const d = new Date(date);
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-};
-const formatTime = seconds => `${String(Math.floor(seconds / 60)).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;
+import React, { useEffect, useRef, useState } from 'react';
+import { focusDateKey, formatFocusTime, getFocusStats } from './lib/focus.js';
 
 export default function FocusRoom({ s, save }) {
   const [minutes, setMinutes] = useState(25);
@@ -16,16 +11,11 @@ export default function FocusRoom({ s, save }) {
   const completedRef = useRef(false);
   const sessions = s.focusSessions || [];
   const tasks = (s.tasks || []).filter(task => !task.done);
-  const today = dateKey();
+  const today = focusDateKey();
+  const stats = getFocusStats(sessions, today);
   const todaySessions = sessions.filter(session => session.dateKey === today);
-  const todayMinutes = todaySessions.reduce((sum, session) => sum + (Number(session.durationMinutes) || 0), 0);
-  const week = useMemo(() => {
-    const cutoff = new Date();
-    cutoff.setDate(cutoff.getDate() - 6);
-    const cutoffKey = dateKey(cutoff);
-    return sessions.filter(session => session.dateKey >= cutoffKey && session.dateKey <= today)
-      .reduce((sum, session) => sum + (Number(session.durationMinutes) || 0), 0);
-  }, [sessions, today]);
+  const todayMinutes = stats.todayMinutes;
+  const week = stats.weekMinutes;
 
   useEffect(() => {
     if (!running) return undefined;
@@ -98,7 +88,7 @@ export default function FocusRoom({ s, save }) {
     </div>
     <div className="focus-clock">
       <span className="focus-mode-label">{mode === 'focus' ? 'جلسة تركيز' : 'استراحة قصيرة'}</span>
-      <div className="focus-time" role="timer" aria-live="off">{formatTime(remaining)}</div>
+      <div className="focus-time" role="timer" aria-live="off">{formatFocusTime(remaining)}</div>
       <p>{mode === 'focus' ? 'اختَر مهمة واحدة، وأغلق المشتتات قدر الإمكان.' : 'استرح بهدوء؛ لا تحتاج إلى إنجاز شيء الآن.'}</p>
       {mode === 'focus' && <div className="focus-presets">{[15,25,50].map(value => <button key={value} disabled={running} className={minutes === value ? 'active-filter' : ''} onClick={() => chooseMinutes(value)}>{value} دقيقة</button>)}</div>}
       <div className="focus-controls">
