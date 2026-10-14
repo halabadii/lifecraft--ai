@@ -31,6 +31,9 @@ jobs:
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
       - uses: actions/upload-pages-artifact@v3
         with:
+          name: ascend-pages
           path: ./dist
       - id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: ascend-pages
