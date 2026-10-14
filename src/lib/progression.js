@@ -60,6 +60,7 @@ export function getProgression(state = {}) {
   ].map(item => ({ ...item, unlocked: Boolean(item.unlocked) }));
   return {
     domains,
+    achievements,
     totalXp,
     level: Math.floor(totalXp / 500) + 1,
     completedItems: [tasks, habits, study, skills, money, goals].reduce(
