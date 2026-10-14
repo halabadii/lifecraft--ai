@@ -13,7 +13,7 @@ Arabic-first RTL personal life operating system built with React and Vite. The p
 - Dashboard and progress overview
 - Daily coach with focus modes, adjustable session lengths, quick action insertion, and a saved daily reflection
 - Habit consistency dashboard with current and best streaks, total logged days, and a daily check-in; missing a day does not erase the historical best streak
-- Advanced task center with priorities, due dates, estimated durations, overdue/upcoming filters, and duplicate prevention when adding tasks manually or from the daily planner, coach, and roadmap
+- Advanced task center with instant search, priorities, due dates, estimated durations, overdue/upcoming filters, and duplicate prevention when adding tasks manually or from the daily planner, coach, and roadmap
 - Transparent life-data assessment dashboard covering goals, tasks, study, habits, skills, and money tracking
 - Goals, daily tasks, 30-day roadmap, study, skills, money, travel checklist, habits, notes
 - Rule-based personal planner: daily actions, weekly suggestions, milestones, blockers, and a 30-day plan
