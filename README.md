@@ -13,6 +13,8 @@ Arabic-first RTL personal life operating system built with React and Vite. The p
 - Dashboard and progress overview
 - Goals, daily tasks, 30-day roadmap, study, skills, money, travel checklist, habits, notes
 - Rule-based personal planner: daily actions, weekly suggestions, milestones, blockers, and a 30-day plan
+- Digital character progression with five independent domains, locally calculated XP, levels, and an evolving avatar badge
+- Character XP is derived from recorded completed items and keyword-matched categories; it is a motivational game mechanic, not a validated assessment
 - Local persistence and JSON backup/restore
 - Optional Supabase cloud sync, disabled unless environment variables are configured
 - No subscriptions, advertisements, or paywall in the core application
@@ -35,6 +37,8 @@ This is a static Vite app and can be deployed to GitHub Pages, Netlify, Vercel, 
 ## Architecture
 - `src/main.jsx`: UI shell and feature views
 - `src/lib/planner.js`: state model, local persistence, and rule-based planning engine
+- `src/lib/progression.js`: offline XP and character level calculations
+- `src/lib/*.test.js`: unit tests for planner and progression logic
 - `src/lib/cloud.js`: optional Supabase email login and cloud sync
 
 ## Optional cloud sync
