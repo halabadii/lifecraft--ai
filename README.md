@@ -20,7 +20,7 @@ Arabic-first RTL personal life operating system built with React and Vite. The p
 - Milestone-based goal center with categories, optional deadlines, descriptions, computed progress, editable milestones, and one-click creation of linked tasks; existing goals remain supported
 - Goals, daily tasks, 30-day roadmap, study, skills, money, travel checklist, habits, notes
 - Rule-based personal planner: daily actions, weekly suggestions, milestones, blockers, and a 30-day plan
-- Digital character progression with five independent domains, locally calculated XP, levels, and an evolving avatar badge
+- Digital character progression with five independent domains, locally calculated XP, levels, an evolving avatar badge, and eight unlockable achievement badges tied to recorded tasks, goals, focus sessions, study, habits, and domain progression
 - Character XP is derived from recorded completed items and keyword-matched categories; it is a motivational game mechanic, not a validated assessment
 - Local persistence, JSON backup/restore, and a destructive clear-all control protected by an exact confirmation phrase; if optional cloud sync is enabled, the empty state is also submitted for the current account
 - Optional Supabase cloud sync, disabled unless environment variables are configured
