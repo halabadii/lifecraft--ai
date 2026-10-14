@@ -22,7 +22,7 @@ Arabic-first RTL personal life operating system built with React and Vite. The p
 - Rule-based personal planner: daily actions, weekly suggestions, milestones, blockers, and a 30-day plan
 - Digital character progression with five independent domains, locally calculated XP, levels, and an evolving avatar badge
 - Character XP is derived from recorded completed items and keyword-matched categories; it is a motivational game mechanic, not a validated assessment
-- Local persistence and JSON backup/restore
+- Local persistence, JSON backup/restore, and a destructive clear-all control protected by an exact confirmation phrase; if optional cloud sync is enabled, the empty state is also submitted for the current account
 - Optional Supabase cloud sync, disabled unless environment variables are configured
 - No subscriptions, advertisements, or paywall in the core application
 
