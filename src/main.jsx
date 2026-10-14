@@ -7,6 +7,7 @@ import{getHabitStats}from'./lib/habits.js';
 import TaskManager from './TaskManager.jsx';
 import FocusRoom from './FocusRoom.jsx';
 import WeeklyReview from './WeeklyReview.jsx';
+import GoalCenter from './GoalCenter.jsx';
 import{cloudEnabled,supabase,signInWithEmail,signOut,loadCloudState,saveCloudState}from'./lib/cloud.js';
 
 const h=React.createElement;
@@ -30,7 +31,7 @@ function App(){
  if(p==='landing')return h(Landing,{onStart:()=>setP('onboarding')});
  if(p==='onboarding')return h(Onboarding,{s,save,onDone:()=>{save({...s,profile:{...s.profile,onboarded:true}});setP('dashboard')}});
  const current=(menu.find(x=>x[0]===p)||[])[1]||'الرئيسية';
- const content={dashboard:h(Dashboard,{s,plan,setP}),planner:h(Planner,{s,save,plan}),coach:h(DailyCoach,{s,save,plan}),roadmap:h(Roadmap,{s,save,plan}),assessment:h(Assessment,{s}),character:h(Character,{s}),progress:h(WeeklyReview,{s}),account:h(Account,{session,setSession,busy,setBusy,error,setError,s,save}),goals:h(Goals,{s,save}),study:h(Study,{s,save}),focus:h(FocusRoom,{s,save}),money:h(Money,{s,save}),travel:h(Travel,{s,save}),habits:h(Habits,{s,save}),tasks:h(TaskManager,{s,save,toggle,remove}),skills:h(List,{s,add,toggle,remove,save,k:'skills'}),notes:h(List,{s,add,toggle,remove,save,k:'notes'})};
+ const content={dashboard:h(Dashboard,{s,plan,setP}),planner:h(Planner,{s,save,plan}),coach:h(DailyCoach,{s,save,plan}),roadmap:h(Roadmap,{s,save,plan}),assessment:h(Assessment,{s}),character:h(Character,{s}),progress:h(WeeklyReview,{s}),account:h(Account,{session,setSession,busy,setBusy,error,setError,s,save}),goals:h(GoalCenter,{s,save,setP}),study:h(Study,{s,save}),focus:h(FocusRoom,{s,save}),money:h(Money,{s,save}),travel:h(Travel,{s,save}),habits:h(Habits,{s,save}),tasks:h(TaskManager,{s,save,toggle,remove}),skills:h(List,{s,add,toggle,remove,save,k:'skills'}),notes:h(List,{s,add,toggle,remove,save,k:'notes'})};
  return h('div',{className:'app'},
   h('aside',null,h('div',{className:'brand'},'ASCEND',h('span',null,'ارتقِ بنفسك')),
    h('nav',null,menu.map(x=>h('button',{key:x[0],className:p===x[0]?'on':'',onClick:()=>setP(x[0])},x[1]))),
