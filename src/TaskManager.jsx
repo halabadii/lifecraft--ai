@@ -17,6 +17,7 @@ export default function TaskManager({ s, save, toggle, remove }) {
   const [dueDate, setDueDate] = useState(localDate());
   const [duration, setDuration] = useState('25');
   const [filter, setFilter] = useState('all');
+  const [query, setQuery] = useState('');
   const [message, setMessage] = useState('');
   const tasks = s.tasks || [];
   const today = localDate();
@@ -30,6 +31,7 @@ export default function TaskManager({ s, save, toggle, remove }) {
   }), [tasks, today]);
 
   const visible = tasks.filter(task => {
+    if (query.trim() && !String(task.title || '').toLocaleLowerCase().includes(query.trim().toLocaleLowerCase())) return false;
     if (filter === 'all') return true;
     if (filter === 'done') return task.done;
     if (filter === 'overdue') return overdue(task);
@@ -81,6 +83,7 @@ export default function TaskManager({ s, save, toggle, remove }) {
       {message && <p className="task-message" role="status">{message}</p>}
     </div>
     <div className="task-filters">
+      <input className="task-search" value={query} onChange={e => setQuery(e.target.value)} placeholder="🔎 ابحث في مهامك..." aria-label="البحث في المهام" />
       {filters.map(([value, label]) => <button key={value}
         className={filter === value ? 'active-filter' : ''}
         onClick={() => setFilter(value)}>{label}{value === 'overdue' ? ` (${counts.overdue})` : ''}</button>)}
