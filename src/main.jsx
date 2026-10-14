@@ -5,10 +5,11 @@ import{makePlan,loadState,saveState,normalizeState}from'./lib/planner.js';
 import{getProgression}from'./lib/progression.js';
 import{getHabitStats}from'./lib/habits.js';
 import TaskManager from './TaskManager.jsx';
+import FocusRoom from './FocusRoom.jsx';
 import{cloudEnabled,supabase,signInWithEmail,signOut,loadCloudState,saveCloudState}from'./lib/cloud.js';
 
 const h=React.createElement;
-const menu=[['dashboard','الرئيسية'],['goals','الأهداف'],['tasks','المهام'],['roadmap','خارطة 30 يوم'],['study','الدراسة'],['skills','المهارات'],['money','المال'],['travel','إيطاليا والسفر'],['habits','العادات'],['notes','الملاحظات'],['planner','مخطط الحياة'],['coach','المدرب اليومي'],['assessment','تقييم الحياة'],['character','الشخصية الرقمية'],['progress','التقدم'],['account','الحساب']];
+const menu=[['dashboard','الرئيسية'],['goals','الأهداف'],['tasks','المهام'],['roadmap','خارطة 30 يوم'],['study','الدراسة'],['focus','التركيز'],['skills','المهارات'],['money','المال'],['travel','إيطاليا والسفر'],['habits','العادات'],['notes','الملاحظات'],['planner','مخطط الحياة'],['coach','المدرب اليومي'],['assessment','تقييم الحياة'],['character','الشخصية الرقمية'],['progress','التقدم'],['account','الحساب']];
 const labels={goals:'الأهداف',tasks:'المهام اليومية',study:'الدراسة',skills:'المهارات',money:'المال',travel:'إيطاليا والسفر',habits:'العادات',notes:'الملاحظات'};
 const uid=()=>globalThis.crypto?.randomUUID?.()||String(Date.now()+Math.random());
 const today=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
@@ -28,7 +29,7 @@ function App(){
  if(p==='landing')return h(Landing,{onStart:()=>setP('onboarding')});
  if(p==='onboarding')return h(Onboarding,{s,save,onDone:()=>{save({...s,profile:{...s.profile,onboarded:true}});setP('dashboard')}});
  const current=(menu.find(x=>x[0]===p)||[])[1]||'الرئيسية';
- const content={dashboard:h(Dashboard,{s,plan,setP}),planner:h(Planner,{s,save,plan}),coach:h(DailyCoach,{s,save,plan}),roadmap:h(Roadmap,{s,save,plan}),assessment:h(Assessment,{s}),character:h(Character,{s}),progress:h(Progress,{s}),account:h(Account,{session,setSession,busy,setBusy,error,setError,s,save}),goals:h(Goals,{s,save}),study:h(Study,{s,save}),money:h(Money,{s,save}),travel:h(Travel,{s,save}),habits:h(Habits,{s,save}),tasks:h(TaskManager,{s,save,toggle,remove}),skills:h(List,{s,add,toggle,remove,save,k:'skills'}),notes:h(List,{s,add,toggle,remove,save,k:'notes'})};
+ const content={dashboard:h(Dashboard,{s,plan,setP}),planner:h(Planner,{s,save,plan}),coach:h(DailyCoach,{s,save,plan}),roadmap:h(Roadmap,{s,save,plan}),assessment:h(Assessment,{s}),character:h(Character,{s}),progress:h(Progress,{s}),account:h(Account,{session,setSession,busy,setBusy,error,setError,s,save}),goals:h(Goals,{s,save}),study:h(Study,{s,save}),focus:h(FocusRoom,{s,save}),money:h(Money,{s,save}),travel:h(Travel,{s,save}),habits:h(Habits,{s,save}),tasks:h(TaskManager,{s,save,toggle,remove}),skills:h(List,{s,add,toggle,remove,save,k:'skills'}),notes:h(List,{s,add,toggle,remove,save,k:'notes'})};
  return h('div',{className:'app'},
   h('aside',null,h('div',{className:'brand'},'ASCEND',h('span',null,'ارتقِ بنفسك')),
    h('nav',null,menu.map(x=>h('button',{key:x[0],className:p===x[0]?'on':'',onClick:()=>setP(x[0])},x[1]))),
