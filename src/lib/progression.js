@@ -43,7 +43,7 @@ export function getProgression(state = {}) {
     { id: 'knowledge', name: 'المعرفة', icon: '📚', xp: xpFor(study, 30) + xpFor(skills, 15) + learningModuleCompletions * 10 },
     { id: 'discipline', name: 'الانضباط', icon: '🔥', xp: xpFor(tasks, 10) + xpFor(habits, 15) + focusSessions.length * 10 + wellnessCheckins * 2 },
     { id: 'social', name: 'المهارات الاجتماعية', icon: '🗣️', xp: xpFor(socialSkills, 25) + xpFor(socialTasks, 15) },
-    { id: 'finance', name: 'الإدارة المالية', icon: '💰', xp: xpFor(money, 20) + xpFor(financeTasks, 15) + xpFor(financeGoals, 10) }
+    { id: 'finance', name: 'الإدارة المالية', icon: '💰', xp: xpFor(money, 20) + xpFor(financeTasks, 15) + xpFor(financeGoals, 10) + moneyTransactions.length * 5 }
   ].map(domain => ({
     ...domain,
     level: Math.floor(domain.xp / 100) + 1,
