@@ -17,6 +17,10 @@ export function getProgression(state = {}) {
   const study = Array.isArray(state.study) ? state.study : [];
   const skills = Array.isArray(state.skills) ? state.skills : [];
   const money = Array.isArray(state.money) ? state.money : [];
+  const moneyTransactions = Array.isArray(state.moneyTransactions) ? state.moneyTransactions : [];
+  const wellnessLogs = state.wellnessLogs && typeof state.wellnessLogs === 'object' ? state.wellnessLogs : {};
+  const wellnessCheckins = Object.values(wellnessLogs).reduce((sum, log) => sum + Object.values(log || {}).filter(Boolean).length, 0);
+  const learningModuleCompletions = skills.reduce((sum, skill) => sum + (Array.isArray(skill?.modules) ? skill.modules.filter(done).length : 0), 0);
   const goals = Array.isArray(state.goals) ? state.goals : [];
   const focusSessions = Array.isArray(state.focusSessions) ? state.focusSessions : [];
   const completedTasks = tasks.filter(done).length;
@@ -35,9 +39,9 @@ export function getProgression(state = {}) {
   const financeGoals = matching(goals, financeWords);
 
   const domains = [
-    { id: 'body', name: 'القوة البدنية', icon: '💪', xp: xpFor(bodyHabits, 20) + xpFor(bodyTasks, 15) },
-    { id: 'knowledge', name: 'المعرفة', icon: '📚', xp: xpFor(study, 30) + xpFor(skills, 15) },
-    { id: 'discipline', name: 'الانضباط', icon: '🔥', xp: xpFor(tasks, 10) + xpFor(habits, 15) + focusSessions.length * 10 },
+    { id: 'body', name: 'القوة البدنية', icon: '💪', xp: xpFor(bodyHabits, 20) + xpFor(bodyTasks, 15) + wellnessCheckins * 5 },
+    { id: 'knowledge', name: 'المعرفة', icon: '📚', xp: xpFor(study, 30) + xpFor(skills, 15) + learningModuleCompletions * 10 },
+    { id: 'discipline', name: 'الانضباط', icon: '🔥', xp: xpFor(tasks, 10) + xpFor(habits, 15) + focusSessions.length * 10 + wellnessCheckins * 2 },
     { id: 'social', name: 'المهارات الاجتماعية', icon: '🗣️', xp: xpFor(socialSkills, 25) + xpFor(socialTasks, 15) },
     { id: 'finance', name: 'الإدارة المالية', icon: '💰', xp: xpFor(money, 20) + xpFor(financeTasks, 15) + xpFor(financeGoals, 10) }
   ].map(domain => ({
@@ -56,7 +60,10 @@ export function getProgression(state = {}) {
     { id: 'first-goal', title: 'وصلت للنهاية', icon: '🎯', detail: 'أكمل هدفًا مسجلًا', unlocked: completedGoals >= 1 },
     { id: 'study-five', title: 'متعلم مستمر', icon: '📚', detail: 'أكمل 5 عناصر دراسة', unlocked: completedStudy >= 5 },
     { id: 'habit-seven', title: 'أسبوع من الالتزام', icon: '🔥', detail: 'سجّل 7 إنجازات عادات', unlocked: habitCheckins >= 7 },
-    { id: 'balanced', title: 'توازن المجالات', icon: '⚖️', detail: 'ارفع مستويين من المجالات إلى المستوى 2', unlocked: domains.filter(domain => domain.level >= 2).length >= 2 }
+    { id: 'balanced', title: 'توازن المجالات', icon: '⚖️', detail: 'ارفع مستويين من المجالات إلى المستوى 2', unlocked: domains.filter(domain => domain.level >= 2).length >= 2 },
+    { id: 'wellness-start', title: 'اهتمام بالنفس', icon: '🌿', detail: 'سجّل أول خطوة في روتين العناية', unlocked: wellnessCheckins >= 1 },
+    { id: 'learning-start', title: 'تعلم بالتطبيق', icon: '🧩', detail: 'أكمل أول وحدة من مسار مهارة', unlocked: learningModuleCompletions >= 1 },
+    { id: 'money-log', title: 'وعي مالي', icon: '🧾', detail: 'سجّل أول عملية في الإدارة المالية', unlocked: moneyTransactions.length >= 1 }
   ].map(item => ({ ...item, unlocked: Boolean(item.unlocked) }));
   return {
     domains,
