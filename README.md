@@ -11,6 +11,7 @@ Arabic-first RTL personal life operating system built with React and Vite. The p
 
 ## Existing features
 - Dashboard and progress overview
+- Transparent life-data assessment dashboard covering goals, tasks, study, habits, skills, and money tracking
 - Goals, daily tasks, 30-day roadmap, study, skills, money, travel checklist, habits, notes
 - Rule-based personal planner: daily actions, weekly suggestions, milestones, blockers, and a 30-day plan
 - Digital character progression with five independent domains, locally calculated XP, levels, and an evolving avatar badge
