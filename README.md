@@ -12,7 +12,7 @@ Arabic-first RTL personal life operating system built with React and Vite. The p
 ## Existing features
 - Dashboard and progress overview
 - Daily coach with focus modes, adjustable session lengths, quick action insertion, and a saved daily reflection
-- Habit consistency dashboard with current and best streaks, total logged days, and a daily check-in; missing a day does not erase the historical best streak
+- Advanced habit tracker with daily check-ins, a seven-day editable history, weekly adherence percentages, habit categories, preferred reminder times, and current/best streaks; reminder times are in-app preferences, not automatic phone notifications
 - Advanced task center with instant search, priorities, due dates, estimated durations, overdue/upcoming filters, and duplicate prevention when adding tasks manually or from the daily planner, coach, and roadmap
 - Weekly review dashboard with a seven-day focus chart, completed focus-session totals, habit check-ins, and current task counts based only on locally recorded data
 - Focus room with a 15/25/50-minute timer, pause/resume/reset, a five-minute break, optional task association, completed-session history, and daily/seven-day totals stored locally
