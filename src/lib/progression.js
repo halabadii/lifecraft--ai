@@ -18,6 +18,11 @@ export function getProgression(state = {}) {
   const skills = Array.isArray(state.skills) ? state.skills : [];
   const money = Array.isArray(state.money) ? state.money : [];
   const goals = Array.isArray(state.goals) ? state.goals : [];
+  const focusSessions = Array.isArray(state.focusSessions) ? state.focusSessions : [];
+  const completedTasks = tasks.filter(done).length;
+  const completedStudy = study.filter(done).length;
+  const completedGoals = goals.filter(goal => Number(goal?.progress) >= 100 || (Array.isArray(goal?.milestones) && goal.milestones.length > 0 && goal.milestones.every(step => step.done))).length;
+  const habitCheckins = habits.reduce((sum, habit) => sum + Object.values(habit?.history || {}).filter(Boolean).length, 0);
 
   const bodyWords = ['رياضة', 'تمرين', 'مشي', 'صحة', 'نوم', 'ماء', 'جسم', 'workout', 'walk', 'fitness'];
   const socialWords = ['تواصل', 'حديث', 'كلام', 'اجتماع', 'صديق', 'اجتماعي', 'عرض', 'social', 'speak'];
@@ -32,7 +37,7 @@ export function getProgression(state = {}) {
   const domains = [
     { id: 'body', name: 'القوة البدنية', icon: '💪', xp: xpFor(bodyHabits, 20) + xpFor(bodyTasks, 15) },
     { id: 'knowledge', name: 'المعرفة', icon: '📚', xp: xpFor(study, 30) + xpFor(skills, 15) },
-    { id: 'discipline', name: 'الانضباط', icon: '🔥', xp: xpFor(tasks, 10) + xpFor(habits, 15) },
+    { id: 'discipline', name: 'الانضباط', icon: '🔥', xp: xpFor(tasks, 10) + xpFor(habits, 15) + focusSessions.length * 10 },
     { id: 'social', name: 'المهارات الاجتماعية', icon: '🗣️', xp: xpFor(socialSkills, 25) + xpFor(socialTasks, 15) },
     { id: 'finance', name: 'الإدارة المالية', icon: '💰', xp: xpFor(money, 20) + xpFor(financeTasks, 15) + xpFor(financeGoals, 10) }
   ].map(domain => ({
@@ -43,6 +48,16 @@ export function getProgression(state = {}) {
   }));
 
   const totalXp = domains.reduce((sum, domain) => sum + domain.xp, 0);
+  const achievements = [
+    { id: 'first-task', title: 'أول إنجاز', icon: '🌱', detail: 'أكمل أول مهمة', unlocked: completedTasks >= 1 },
+    { id: 'ten-tasks', title: 'صانع الإنجاز', icon: '⚡', detail: 'أكمل 10 مهام', unlocked: completedTasks >= 10 },
+    { id: 'first-focus', title: 'بداية التركيز', icon: '⏳', detail: 'أكمل أول جلسة تركيز', unlocked: focusSessions.length >= 1 },
+    { id: 'five-focus', title: 'عقل حاضر', icon: '🧠', detail: 'أكمل 5 جلسات تركيز', unlocked: focusSessions.length >= 5 },
+    { id: 'first-goal', title: 'وصلت للنهاية', icon: '🎯', detail: 'أكمل هدفًا مسجلًا', unlocked: completedGoals >= 1 },
+    { id: 'study-five', title: 'متعلم مستمر', icon: '📚', detail: 'أكمل 5 عناصر دراسة', unlocked: completedStudy >= 5 },
+    { id: 'habit-seven', title: 'أسبوع من الالتزام', icon: '🔥', detail: 'سجّل 7 إنجازات عادات', unlocked: habitCheckins >= 7 },
+    { id: 'balanced', title: 'توازن المجالات', icon: '⚖️', detail: 'ارفع مستويين من المجالات إلى المستوى 2', unlocked: domains.filter(domain => domain.level >= 2).length >= 2 }
+  ].map(item => ({ ...item, unlocked: Boolean(item.unlocked) }));
   return {
     domains,
     totalXp,
