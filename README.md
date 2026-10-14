@@ -20,7 +20,12 @@ Arabic-first RTL personal life operating system built with React and Vite. The p
 - Milestone-based goal center with categories, optional deadlines, descriptions, computed progress, editable milestones, and one-click creation of linked tasks; existing goals remain supported
 - Goals, daily tasks, 30-day roadmap, study, skills, money, travel checklist, habits, notes
 - Rule-based personal planner: daily actions, weekly suggestions, milestones, blockers, and a 30-day plan
-- Digital character progression with five independent domains, locally calculated XP, levels, an evolving avatar badge, and eight unlockable achievement badges tied to recorded tasks, goals, focus sessions, study, habits, and domain progression
+- Digital character progression with five independent domains, locally calculated XP, levels, a visual avatar that evolves from recorded progress, and achievement badges tied to tasks, goals, focus sessions, study, habits, wellness, learning modules, finance records, and domain progression
+- Daily physical and mental wellness routines, check-ins, and private daily reflections stored locally; self-care prompts are supportive tools, not medical advice
+- Reward shop with custom rewards and an internal points balance calculated from recorded activity; points are not money and do not have cash value
+- Structured skill-learning paths with basic concepts, guided practice, project/self-test milestones, recorded practice time, and task creation to connect learning with execution
+- Expanded manual finance management for income, expenses, categories, monthly budgets, savings goals, and a transaction history; no bank connection or transfers
+- Adaptive local coach that uses recorded energy, overdue tasks, wellness check-ins, active learning paths, and monthly spending to suggest small next actions
 - Character XP is derived from recorded completed items and keyword-matched categories; it is a motivational game mechanic, not a validated assessment
 - Local persistence, JSON backup/restore, and a destructive clear-all control protected by an exact confirmation phrase; if optional cloud sync is enabled, the empty state is also submitted for the current account
 - Optional Supabase cloud sync, disabled unless environment variables are configured
